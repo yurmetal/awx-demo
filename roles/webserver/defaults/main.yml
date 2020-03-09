@@ -1,0 +1,11 @@
+---
+# defaults file for webserver
+
+# Used to store global nginx configuration
+nginx_config_folder: /etc/nginx
+
+# Used to store various site configurations
+nginx_website_config_folder: /etc/nginx/conf.d
+
+# Used to store various site contents
+nginx_website_content_folder: /usr/share/nginx

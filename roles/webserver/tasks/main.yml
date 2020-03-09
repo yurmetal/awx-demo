@@ -1,0 +1,37 @@
+---
+# tasks file for webserver
+- name: "Install nginx and deploy site content"
+  yum:
+    name: nginx
+    state: latest
+
+- name: "Change nginx default configuration file"
+  template:
+    src: "nginx.conf.j2"
+    dest: "{{ nginx_config_folder }}/nginx.conf"
+
+- name: "Start and enable nginx"
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: "Copy images"
+  copy:
+    src: "{{ item }}"
+    dest: "{{ nginx_website_content_folder }}"
+  loop:
+    - "tux.png"
+    - "roulette.png"
+
+- name: "Generate index.html file and restart nginx"
+  template:
+    src: "index.j2"
+    dest: "{{ nginx_website_content_folder }}/index.html"
+
+- name: "Generate website configuration file and restart nginx"
+  template:
+    src: "website.conf.j2"
+    dest: "{{ nginx_website_config_folder }}/website.conf"
+  notify:
+    - Restart nginx

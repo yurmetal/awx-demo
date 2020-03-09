@@ -1,0 +1,8 @@
+---
+  - name: "Install nginx and deploy basic html website"
+    hosts: awx-client.localdomain
+    remote_user: jdoe
+    become: true
+
+    roles:
+      - { role: webserver, when: ansible_system == 'Linux' }
